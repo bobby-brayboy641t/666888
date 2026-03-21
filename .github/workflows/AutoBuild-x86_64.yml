@@ -329,7 +329,7 @@ jobs:
         Firmware_Diy_End
         cd bin/targets/x86/64/
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-
+        cat openwrt-*.manifest
 
 
 
