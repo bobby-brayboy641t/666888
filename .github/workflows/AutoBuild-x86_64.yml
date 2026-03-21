@@ -347,7 +347,13 @@ jobs:
       if: env.UPLOAD_RELEASES == 'true' && steps.compile.outcome == 'success' && !cancelled()
       run: |
         wget https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O API
-        
+        echo "## Luci app" >> release.txt
+        grep ^luci-app- ${{ env.FIRMWARE }}/openwrt-*.manifest | awk 'BEGIN { print "**Name**|**Version**\n-|-" } { split($0, arr, " - "); print arr[1] "|" arr[2] }' >> release.txt
+
+
+
+
+
     - name: Refresh API (2/2)
       if: env.UPLOAD_RELEASES == 'true' && steps.compile.outcome == 'success' && !cancelled()
       uses: svenstaro/upload-release-action@v2
@@ -370,11 +376,6 @@ jobs:
           ### 🧊 固件版本
           - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录
           - ${{ env.VERSION_INFO }} 
-
-
-        echo "## Luci app" >> release.txt
-        grep ^luci-app- ${{ env.FIRMWARE }}/openwrt-*.manifest | awk 'BEGIN { print "**Name**|**Version**\n-|-" } { split($0, arr, " - "); print arr[1] "|" arr[2] }' >> release.txt
-        echo "status=success" >> $GITHUB_OUTPUT
 
 
       # ========== 修改：编译成功邮件添加固件列表 ==========
