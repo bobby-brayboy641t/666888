@@ -327,6 +327,8 @@ jobs:
         cd openwrt
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_Function.sh
         Firmware_Diy_End
+        cd assets/
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
     - name: 将固件上传至Release
       uses: svenstaro/upload-release-action@v2
@@ -362,9 +364,6 @@ jobs:
           - 🌐 默认地址: ${{ env.MANAGE_IP }}
           - 🌴 名称：root
           - 🔑 默认密码: password
-          ### 🧊 固件版本
-          - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录
-          - ${{ env.VERSION_INFO }} 
           ### 🧊 固件版本
           - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录
           - ${{ env.VERSION_INFO }} 
